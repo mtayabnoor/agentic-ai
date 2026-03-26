@@ -41,6 +41,7 @@ export default function SignUpPage() {
       name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
@@ -49,12 +50,16 @@ export default function SignUpPage() {
       {
         email: values.email,
         password: values.password,
-        name: values.name
+        name: values.name,
       },
       {
         onSuccess: () => {
-          toast.success("Account created. Check your email to verify your account.");
-          router.push(`/verify-email?mode=pending&email=${encodeURIComponent(values.email)}`);
+          toast.success(
+            "If this email can be used, we sent next steps to your inbox.",
+          );
+          router.push(
+            `/verify-email?mode=pending&email=${encodeURIComponent(values.email)}`,
+          );
         },
         onError: (ctx) => {
           setError("root", {
@@ -79,9 +84,7 @@ export default function SignUpPage() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Global Error */}
-            {errors.root && (
-              <FieldError errors={[errors.root]} />
-            )}
+            {errors.root && <FieldError errors={[errors.root]} />}
 
             <FieldGroup>
               {/* Name */}
@@ -93,9 +96,7 @@ export default function SignUpPage() {
                   {...register("name")}
                   autoComplete="off"
                 />
-                {errors.name && (
-                  <FieldError errors={[errors.name]} />
-                )}
+                {errors.name && <FieldError errors={[errors.name]} />}
               </Field>
 
               {/* Email */}
@@ -108,9 +109,7 @@ export default function SignUpPage() {
                   {...register("email")}
                   autoComplete="off"
                 />
-                {errors.email && (
-                  <FieldError errors={[errors.email]} />
-                )}
+                {errors.email && <FieldError errors={[errors.email]} />}
               </Field>
 
               {/* Password */}
@@ -122,8 +121,22 @@ export default function SignUpPage() {
                   {...register("password")}
                   autoComplete="off"
                 />
-                {errors.password && (
-                  <FieldError errors={[errors.password]} />
+                {errors.password && <FieldError errors={[errors.password]} />}
+              </Field>
+
+              {/* Confirm Password */}
+              <Field data-invalid={!!errors.confirmPassword}>
+                <FieldLabel htmlFor="signup-confirm-password">
+                  Confirm Password
+                </FieldLabel>
+                <Input
+                  id="signup-confirm-password"
+                  type="password"
+                  {...register("confirmPassword")}
+                  autoComplete="off"
+                />
+                {errors.confirmPassword && (
+                  <FieldError errors={[errors.confirmPassword]} />
                 )}
               </Field>
             </FieldGroup>

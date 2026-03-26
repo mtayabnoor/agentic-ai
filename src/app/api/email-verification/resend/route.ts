@@ -13,13 +13,11 @@ export async function POST(request: Request) {
 
   try {
     await auth.api.sendVerificationEmail({
-      body: { email, callbackURL: "/email-verified" },
+      body: { email, callbackURL: "/verify-email?mode=success" },
     });
     return Response.json({ status: "ok" }, { status: 200 });
   } catch {
-    return Response.json(
-      { message: "Could not send verification email." },
-      { status: 400 },
-    );
+    // Return generic success to avoid exposing whether the email exists.
+    return Response.json({ status: "ok" }, { status: 200 });
   }
 }
