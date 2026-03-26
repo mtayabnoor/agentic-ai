@@ -76,7 +76,7 @@ function VerifyEmailContent() {
       return;
     }
 
-    setCooldown(30);
+    setCooldown(60);
     toast.success("If your account needs verification, an email is on the way.");
   };
   if (mode === "success") {
