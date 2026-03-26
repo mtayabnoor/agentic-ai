@@ -61,15 +61,29 @@ function VerifyEmailContent() {
     setResending(false);
 
     if (!response.ok) {
-      const payload = (await response.json().catch(() => null)) as
-        | { message?: string }
-        | null;
+      const payload = (await response.json().catch(() => null)) as {
+        message?: string;
+      } | null;
       toast.error(payload?.message || "Could not send verification email.");
       return;
     }
 
     toast.success("Verification email sent. Please check your inbox.");
   };
+  if (mode === "success") {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
+        <Card className="w-full sm:max-w-md">
+          <CardHeader>
+            <CardTitle>Email Verified</CardTitle>
+            <CardDescription>
+              Your email has been verified successfully.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
@@ -80,7 +94,7 @@ function VerifyEmailContent() {
         </CardHeader>
 
         <CardContent className="space-y-4">
-          {( mode === "pending") && (
+          {mode === "pending" && (
             <div className="space-y-2">
               <Input
                 type="email"
