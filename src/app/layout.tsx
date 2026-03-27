@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { Figtree, Playfair_Display, Source_Code_Pro } from 'next/font/google'
+import { Figtree, Playfair_Display, Source_Code_Pro, DM_Sans } from 'next/font/google'
 import { cn } from "@/lib/utils";
 
-
+const dmSans = DM_Sans({subsets:['latin'],variable:'--font-sans'});
 
 const openSans = Figtree({
   variable: '--font-figtree',
@@ -37,11 +37,11 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       className={cn(
-        openSans.variable,
-        sourceSerif4.variable,
-        sourceCode.variable,
-        '...'
-      )}
+              openSans.variable,
+              sourceSerif4.variable,
+              sourceCode.variable,
+              '...'
+            , "font-sans", dmSans.variable)}
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider
