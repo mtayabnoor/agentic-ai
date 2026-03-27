@@ -4,8 +4,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@tailwind utilities;
-
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -163,26 +161,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-sans);
-  }
-
-  input,
-  button,
-  textarea,
-  select {
-    font-family: inherit;
   }
   html {
     @apply font-sans;
 
   }
-}
-
-/* Hide scrollbar for thumbnail strips */
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }

@@ -91,7 +91,7 @@ export const Header = () => {
                 <div className="relative w-8 h-8 mr-3 bg-primary text-primary-foreground rounded-lg flex items-center justify-center font-bold text-xl">
                   F
                 </div>
-                <h1 className="text-xl font-bold">Agentic AI</h1>
+                <h1 className="text-xl">Agentic AI</h1>
               </Link>
               <div className="space-y-2 flex-1">
                 {routes.map((route) => (
@@ -116,7 +116,7 @@ export const Header = () => {
             </div>
           </SheetContent>
         </Sheet>
-        <div className="font-semibold text-lg text-primary">FinanceApp</div>
+        <div className="font-semibold text-lg text-primary">Agentic AI</div>
       </div>
 
       <div className="flex-1"></div>

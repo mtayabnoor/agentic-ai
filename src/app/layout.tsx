@@ -1,13 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Figtree, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { Source_Code_Pro, Source_Serif_4, Figtree, Playfair_Display } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 const playfairDisplayHeading = Playfair_Display({subsets:['latin'],variable:'--font-heading'});
 
 const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
+
+const sourceCodePro = Source_Code_Pro({
+  subsets: ["latin"],
+  variable: "--font-source-code-pro", // Matches the variable in your globals.css
+});
+
+const sourceSerif4 = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-source-serif-4", // Matches the variable in your globals.css
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +30,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn("h-full antialiased", "font-sans", figtree.variable, playfairDisplayHeading.variable)}>
+    <html 
+      lang="en" 
+      suppressHydrationWarning 
+      className={cn(
+              "h-full antialiased font-sans", 
+              sourceCodePro.variable, 
+              sourceSerif4.variable
+            , "font-sans", figtree.variable, playfairDisplayHeading.variable)}
+    >
       <body className="min-h-full flex flex-col">
         <ThemeProvider
           attribute="class"
