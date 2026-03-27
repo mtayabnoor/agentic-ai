@@ -3,12 +3,10 @@
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -19,9 +17,9 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldDescription,
 } from "@/components/ui/field";
 import Link from "next/link";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signinSchema } from "@/lib/validators";
@@ -53,11 +51,15 @@ export default function SignInPage() {
         },
         onError: (ctx) => {
           const errorMessage = ctx.error.message || "Signin failed";
-          const requiresVerification = /email_not_verified|verify/i.test(errorMessage);
+          const requiresVerification = /email_not_verified|verify/i.test(
+            errorMessage,
+          );
 
           if (requiresVerification) {
             toast.error("Please verify your email before signing in.");
-            router.push(`/verify-email?email=${encodeURIComponent(values.email)}`);
+            router.push(
+              `/verify-email?email=${encodeURIComponent(values.email)}`,
+            );
             return;
           }
 
@@ -71,68 +73,65 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4 bg-muted/30">
-      <Card className="w-full sm:max-w-md">
-        <CardHeader>
-          <CardTitle>Sign In</CardTitle>
-          <CardDescription>
-            Enter your email and password to sign in.
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Global Error */}
-            {errors.root && (
-              <FieldError errors={[errors.root]} />
-            )}
-
-            <FieldGroup>
-              {/* Email */}
-              <Field data-invalid={!!errors.email}>
-                <FieldLabel htmlFor="signin-email">Email</FieldLabel>
-                <Input
-                  id="signin-email"
-                  type="email"
-                  {...register("email")}
-                  autoComplete="off"
-                />
-                {errors.email && (
-                  <FieldError errors={[errors.email]} />
-                )}
-              </Field>
-
-              {/* Password */}
-              <Field data-invalid={!!errors.password}>
-                <FieldLabel htmlFor="signin-password">Password</FieldLabel>
-                <Input
-                  id="signin-password"
-                  type="password"
-                  {...register("password")}
-                  autoComplete="off"
-                />
-                {errors.password && (
-                  <FieldError errors={[errors.password]} />
-                )}
-              </Field>
-            </FieldGroup>
-
-            {/* Submit */}
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Signing in..." : "Sign In"}
-            </Button>
-          </form>
-        </CardContent>
-
-        <CardFooter className="flex justify-between text-sm">
-          <Link href="/signup" className="text-primary underline">
-            Create account
-          </Link>
-          <Link href="/forgot-password" className="text-primary underline">
-            Forgot password?
-          </Link>
-        </CardFooter>
-      </Card>
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <div className="flex flex-col gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Login to your account</CardTitle>
+              <CardDescription>
+                Enter your email below to login to your account
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <FieldGroup>
+                  <Field>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="m@example.com"
+                      {...register("email")}
+                      required
+                    />
+                    {errors.email && <FieldError errors={[errors.email]} />}
+                  </Field>
+                  <Field>
+                    <div className="flex items-center">
+                      <FieldLabel htmlFor="password">Password</FieldLabel>
+                      <a
+                        href="#"
+                        className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                      >
+                        Forgot your password?
+                      </a>
+                    </div>
+                    <Input
+                      id="password"
+                      type="password"
+                      {...register("password")}
+                      required
+                    />
+                    {errors.password && (
+                      <FieldError errors={[errors.password]} />
+                    )}
+                  </Field>
+                  <Field>
+                    <Button type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? "Logging in..." : "Login"}
+                    </Button>
+                    {errors.root && <FieldError errors={[errors.root]} />}
+                    <FieldDescription className="text-center">
+                      Don&apos;t have an account? <a href="/signup">Sign up</a>
+                    </FieldDescription>
+                  </Field>
+                </FieldGroup>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }

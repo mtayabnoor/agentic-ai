@@ -125,10 +125,6 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-playfair-display);
-  --font-mono: var(--font-source-code-pro);
-
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -154,13 +150,5 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
-  }
-  html {
-    @apply font-sans;
-
   }
 }

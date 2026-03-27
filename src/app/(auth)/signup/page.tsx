@@ -19,6 +19,7 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldDescription,
 } from "@/components/ui/field";
 import Link from "next/link";
 
@@ -26,6 +27,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "@/lib/validators";
 import { Signup } from "@/lib/types";
+import { useState } from "react";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -46,114 +48,123 @@ export default function SignUpPage() {
   });
 
   const onSubmit = async (values: Signup) => {
-    await authClient.signUp.email(
-      {
-        email: values.email,
-        password: values.password,
-        name: values.name,
-      },
-      {
-        onSuccess: () => {
-          toast.success(
-            "If this email can be used, we sent next steps to your inbox.",
-          );
-          router.push(
-            `/verify-email?email=${encodeURIComponent(values.email)}`,
-          );
+    try {
+      await authClient.signUp.email(
+        {
+          email: values.email,
+          password: values.password,
+          name: values.name,
         },
-        onError: (ctx) => {
-          setError("root", {
-            message: ctx.error.message || "Registration failed",
-          });
-          toast.error(ctx.error.message || "Registration failed");
+        {
+          onSuccess: () => {
+            toast.success(
+              "If this email can be used, we sent next steps to your inbox.",
+            );
+            router.push(
+              `/verify-email?email=${encodeURIComponent(values.email)}`,
+            );
+          },
+          onError: (ctx) => {
+            setError("root", {
+              message: ctx.error.message || "Registration failed",
+            });
+            toast.error(ctx.error.message || "Registration failed");
+          },
         },
-      },
-    );
+      );
+    } catch (error) {
+      setError("root", {
+        message: (error as Error).message || "Registration failed",
+      });
+      toast.error((error as Error).message || "Registration failed");
+    }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4 bg-muted/30">
-      <Card className="w-full sm:max-w-md">
-        <CardHeader>
-          <CardTitle>Create an Account</CardTitle>
-          <CardDescription>
-            Start managing your personal finances.
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Global Error */}
-            {errors.root && <FieldError errors={[errors.root]} />}
-
-            <FieldGroup>
-              {/* Name */}
-              <Field data-invalid={!!errors.name}>
-                <FieldLabel htmlFor="signup-name">Name</FieldLabel>
-                <Input
-                  id="signup-name"
-                  placeholder="John Doe"
-                  {...register("name")}
-                  autoComplete="off"
-                />
-                {errors.name && <FieldError errors={[errors.name]} />}
-              </Field>
-
-              {/* Email */}
-              <Field data-invalid={!!errors.email}>
-                <FieldLabel htmlFor="signup-email">Email</FieldLabel>
-                <Input
-                  id="signup-email"
-                  type="email"
-                  placeholder="name@example.com"
-                  {...register("email")}
-                  autoComplete="off"
-                />
-                {errors.email && <FieldError errors={[errors.email]} />}
-              </Field>
-
-              {/* Password */}
-              <Field data-invalid={!!errors.password}>
-                <FieldLabel htmlFor="signup-password">Password</FieldLabel>
-                <Input
-                  id="signup-password"
-                  type="password"
-                  {...register("password")}
-                  autoComplete="off"
-                />
-                {errors.password && <FieldError errors={[errors.password]} />}
-              </Field>
-
-              {/* Confirm Password */}
-              <Field data-invalid={!!errors.confirmPassword}>
-                <FieldLabel htmlFor="signup-confirm-password">
-                  Confirm Password
-                </FieldLabel>
-                <Input
-                  id="signup-confirm-password"
-                  type="password"
-                  {...register("confirmPassword")}
-                  autoComplete="off"
-                />
-                {errors.confirmPassword && (
-                  <FieldError errors={[errors.confirmPassword]} />
-                )}
-              </Field>
-            </FieldGroup>
-
-            {/* Submit */}
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Creating account..." : "Sign Up"}
-            </Button>
-          </form>
-        </CardContent>
-
-        <CardFooter className="flex justify-between text-sm">
-          <Link href="/signin" className="text-primary underline">
-            Already have an account?
-          </Link>
-        </CardFooter>
-      </Card>
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <Card>
+          <CardHeader>
+            <CardTitle>Create an account</CardTitle>
+            <CardDescription>
+              Enter your information below to create your account
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+              <FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="name">Full Name</FieldLabel>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="John Doe"
+                    {...register("name")}
+                    required
+                  />
+                  {errors.name && <FieldError errors={[errors.name]} />}
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    {...register("email")}
+                    required
+                  />
+                  {errors.email && <FieldError errors={[errors.email]} />}
+                  <FieldDescription>
+                    We&apos;ll use this to contact you. We will not share your
+                    email with anyone else.
+                  </FieldDescription>
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <Input
+                    id="password"
+                    type="password"
+                    {...register("password")}
+                    required
+                  />
+                  <FieldDescription>
+                    Must be at least 8 characters long.
+                  </FieldDescription>
+                  {errors.password && <FieldError errors={[errors.password]} />}
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="confirm-password">
+                    Confirm Password
+                  </FieldLabel>
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    {...register("confirmPassword")}
+                    required
+                  />
+                  <FieldDescription>
+                    Please confirm your password.
+                  </FieldDescription>
+                  {errors.confirmPassword && (
+                    <FieldError errors={[errors.confirmPassword]} />
+                  )}
+                </Field>
+                <FieldGroup>
+                  <Field>
+                    <Button type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? "Creating Account..." : "Create Account"}
+                    </Button>
+                    {errors.root && <FieldError errors={[errors.root]} />}
+                    <FieldDescription className="px-6 text-center">
+                      Already have an account? <a href="/signin">Sign in</a>
+                    </FieldDescription>
+                  </Field>
+                </FieldGroup>
+              </FieldGroup>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
