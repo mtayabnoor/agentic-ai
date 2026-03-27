@@ -58,7 +58,7 @@ export default function SignUpPage() {
             "If this email can be used, we sent next steps to your inbox.",
           );
           router.push(
-            `/verify-email?mode=pending&email=${encodeURIComponent(values.email)}`,
+            `/verify-email?email=${encodeURIComponent(values.email)}`,
           );
         },
         onError: (ctx) => {

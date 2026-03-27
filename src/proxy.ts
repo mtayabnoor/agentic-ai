@@ -19,7 +19,6 @@ export default async function proxy(request: NextRequest) {
 
   if (isLoggedIn && isDashboardRoute && !session.user.emailVerified) {
     const verifyUrl = new URL("/verify-email", request.url);
-    verifyUrl.searchParams.set("mode", "pending");
     verifyUrl.searchParams.set("email", session.user.email);
     return NextResponse.redirect(verifyUrl);
   }

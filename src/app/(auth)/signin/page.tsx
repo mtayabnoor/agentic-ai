@@ -57,7 +57,7 @@ export default function SignInPage() {
 
           if (requiresVerification) {
             toast.error("Please verify your email before signing in.");
-            router.push(`/verify-email?mode=pending&email=${encodeURIComponent(values.email)}`);
+            router.push(`/verify-email?email=${encodeURIComponent(values.email)}`);
             return;
           }
 
