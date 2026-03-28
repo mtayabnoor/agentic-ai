@@ -25,7 +25,7 @@ export default function RootLayout({
               '...'
             , "font-sans", dmSans.variable)}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen flex flex-col antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
