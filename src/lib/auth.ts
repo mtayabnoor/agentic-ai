@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./db";
-import { sendVerificationEmailWithResend } from "./email";
+import { sendVerificationEmailWithResend, sendForgotPasswordEmailWithResend } from "./email";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -11,6 +11,16 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     autoSignIn: false,
+    onExistingUserSignUp: async () => {
+      throw new Error("An account with this email already exists. Please sign in instead.");
+    },
+    sendResetPassword: async ({user, url, token}, request) => {
+      void sendForgotPasswordEmailWithResend({
+        email: user.email,
+        name: user.name,
+        resetUrl: url,
+      });
+    },
   },
   emailVerification: {
     sendOnSignUp: true,
@@ -18,8 +28,8 @@ export const auth = betterAuth({
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url, token }) => {
       const verifyUrl = new URL(url);
-      verifyUrl.searchParams.set("callbackURL", "/verify-email");
-      await sendVerificationEmailWithResend({
+      verifyUrl.searchParams.set("callbackURL", "/verify-email?mode=success");
+      void sendVerificationEmailWithResend({
         email: user.email,
         name: user.name,
         verifyUrl: verifyUrl.toString(),

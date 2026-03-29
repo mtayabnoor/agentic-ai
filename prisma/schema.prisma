@@ -20,15 +20,14 @@ model User {
   emailVerified Boolean  @default(false)
   image         String?
   password      String?
-  role          String   @default("USER")
+  role          String   @default("user")
   address       Json?    @db.Json
   paymentMethod String?  @default("cash_on_delivery")
   createdAt     DateTime @default(now()) @db.Timestamp(6)
   updatedAt     DateTime @updatedAt @db.Timestamp(6)
 
-  accounts      Account[]
-  sessions      Session[]
-
+  accounts Account[]
+  sessions Session[]
 }
 
 model Session {
@@ -43,7 +42,6 @@ model Session {
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
 }
 
 model Account {
@@ -63,5 +61,13 @@ model Account {
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
   user User @relation(fields: [userId], references: [id])
+}
 
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime @db.Timestamp(6)
+  createdAt  DateTime @db.Timestamp(6)
+  updatedAt  DateTime @db.Timestamp(6)
 }

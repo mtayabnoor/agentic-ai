@@ -149,17 +149,16 @@ export default function SignUpPage() {
                     <FieldError errors={[errors.confirmPassword]} />
                   )}
                 </Field>
-                <FieldGroup>
-                  <Field>
-                    <Button type="submit" disabled={isSubmitting}>
-                      {isSubmitting ? "Creating Account..." : "Create Account"}
-                    </Button>
-                    {errors.root && <FieldError errors={[errors.root]} />}
-                    <FieldDescription className="px-6 text-center">
-                      Already have an account? <a href="/signin">Sign in</a>
-                    </FieldDescription>
-                  </Field>
-                </FieldGroup>
+
+                <Field>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Creating Account..." : "Create Account"}
+                  </Button>
+                  {errors.root && <FieldError errors={[errors.root]} />}
+                  <FieldDescription className="px-6 text-center">
+                    Already have an account? <a href="/signin">Sign in</a>
+                  </FieldDescription>
+                </Field>
               </FieldGroup>
             </form>
           </CardContent>

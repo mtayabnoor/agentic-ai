@@ -101,7 +101,7 @@ export default function SignInPage() {
                     <div className="flex items-center">
                       <FieldLabel htmlFor="password">Password</FieldLabel>
                       <a
-                        href="#"
+                        href="/forget-password"
                         className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                       >
                         Forgot your password?
