@@ -50,10 +50,6 @@ export default function SignInPage() {
           router.push('/dashboard');
         },
         onError: (ctx) => {
-          if (ctx.error.status === 403) {
-            toast.error('Please verify your email before signing in.');
-          }
-
           setError('root', {
             message: ctx.error.message,
           });

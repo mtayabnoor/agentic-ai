@@ -1,11 +1,10 @@
-import { Header } from '@/components/shared/header';
-import { Sidebar } from '@/components/shared/sidebar';
+import Header from '@/components/shared/header';
+
 
 export default function Dashboard() {
   return (
     <div>
       <Header />
-      <Sidebar />
     </div>
   );
 }
