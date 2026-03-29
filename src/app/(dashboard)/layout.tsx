@@ -1,7 +1,6 @@
 import { SparklesIcon } from 'lucide-react';
 
 import { AppSidebar } from '@/components/dashboard-sidebar';
-import ProfileDropdown from '@/components/dropdown-profile';
 import { Button } from '@/components/ui/button';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { SiteHeader } from '@/components/dashboard-header';
