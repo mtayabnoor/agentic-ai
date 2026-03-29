@@ -24,7 +24,7 @@ import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const params = useSearchParams();
   const token = params.get('token') || '';
   const router = useRouter();
@@ -111,6 +111,14 @@ export default function ResetPasswordPage() {
           </div>
         </div>
       </div>
+    </Suspense>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense>
+      <ResetPasswordContent />
     </Suspense>
   );
 }

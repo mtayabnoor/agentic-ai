@@ -17,7 +17,7 @@ import {
 import { resendVerificationEmail } from '@/lib/actions';
 import { authClient } from '@/lib/auth-client';
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const params = useSearchParams();
   const router = useRouter();
   const emailFromQuery = params.get('email') || '';
@@ -65,72 +65,76 @@ export default function VerifyEmailPage() {
     }
   };
   return (
+    <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
+      {emailVerified && (
+        <Card className="w-full sm:max-w-md">
+          <CardHeader>
+            <CardTitle>Email Verified</CardTitle>
+            <CardDescription>Your email has been verified successfully.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Button onClick={() => router.push('/dashboard')}>Go to Dashboard</Button>
+          </CardContent>
+        </Card>
+      )}
+      {!emailVerified && (
+        <Card className="w-full sm:max-w-md">
+          <CardHeader>
+            <CardTitle>Verify Email</CardTitle>
+            <CardDescription>
+              Use the email link you received to verify your account.
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="space-y-4">
+            <div className="rounded-md border bg-muted/40 p-3 text-sm text-muted-foreground">
+              Already verified before? Try signing in directly. If you forgot your
+              password, reset it from sign in.
+            </div>
+
+            <div className="space-y-2">
+              <Input
+                type="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <Button
+                type="button"
+                className="w-full"
+                onClick={onResend}
+                disabled={resending || cooldown > 0}
+              >
+                {resending
+                  ? 'Sending...'
+                  : cooldown > 0
+                    ? `Resend available in ${cooldown}s`
+                    : 'Resend verification email'}
+              </Button>
+            </div>
+          </CardContent>
+
+          <CardFooter className="flex justify-between text-sm">
+            <Link href="/signin" className="text-primary underline">
+              Go to Sign In
+            </Link>
+            <Link href="/forgot-password" className="text-primary underline">
+              Forgot password?
+            </Link>
+            <Link href="/signup" className="text-primary underline">
+              Use another email
+            </Link>
+          </CardFooter>
+        </Card>
+      )}
+    </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
     <Suspense>
-      <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
-        {emailVerified && (
-          <Card className="w-full sm:max-w-md">
-            <CardHeader>
-              <CardTitle>Email Verified</CardTitle>
-              <CardDescription>
-                Your email has been verified successfully.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Button onClick={() => router.push('/dashboard')}>Go to Dashboard</Button>
-            </CardContent>
-          </Card>
-        )}
-        {!emailVerified && (
-          <Card className="w-full sm:max-w-md">
-            <CardHeader>
-              <CardTitle>Verify Email</CardTitle>
-              <CardDescription>
-                Use the email link you received to verify your account.
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent className="space-y-4">
-              <div className="rounded-md border bg-muted/40 p-3 text-sm text-muted-foreground">
-                Already verified before? Try signing in directly. If you forgot your
-                password, reset it from sign in.
-              </div>
-
-              <div className="space-y-2">
-                <Input
-                  type="email"
-                  placeholder="name@example.com"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-                <Button
-                  type="button"
-                  className="w-full"
-                  onClick={onResend}
-                  disabled={resending || cooldown > 0}
-                >
-                  {resending
-                    ? 'Sending...'
-                    : cooldown > 0
-                      ? `Resend available in ${cooldown}s`
-                      : 'Resend verification email'}
-                </Button>
-              </div>
-            </CardContent>
-
-            <CardFooter className="flex justify-between text-sm">
-              <Link href="/signin" className="text-primary underline">
-                Go to Sign In
-              </Link>
-              <Link href="/forgot-password" className="text-primary underline">
-                Forgot password?
-              </Link>
-              <Link href="/signup" className="text-primary underline">
-                Use another email
-              </Link>
-            </CardFooter>
-          </Card>
-        )}
-      </div>
+      <VerifyEmailContent />
     </Suspense>
   );
 }
