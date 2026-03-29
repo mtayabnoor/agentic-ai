@@ -22,6 +22,7 @@ import { authClient } from '@/lib/auth-client';
 import { NewPassword } from '@/lib/types';
 import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 export default function ResetPasswordPage() {
   const params = useSearchParams();
@@ -55,58 +56,61 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Reset your password</CardTitle>
-              <CardDescription>
-                Please set your new password below. Make sure it&apos;s strong and secure.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <FieldGroup>
-                  <Field>
-                    <FieldLabel htmlFor="password">New Password</FieldLabel>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="Enter your new password"
-                      {...register('password')}
-                      required
-                    />
-                    {errors.password && <FieldError errors={[errors.password]} />}
-                  </Field>
-                  <Field>
-                    <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
-                    <Input
-                      id="confirm-password"
-                      type="password"
-                      {...register('confirmPassword')}
-                      required
-                    />
-                    <FieldDescription>Please confirm your password.</FieldDescription>
-                    {errors.confirmPassword && (
-                      <FieldError errors={[errors.confirmPassword]} />
-                    )}
-                  </Field>
-                  <Field>
-                    <Button type="submit" disabled={isSubmitting}>
-                      {isSubmitting ? 'Resetting...' : 'Reset Password'}
-                    </Button>
-                    {errors.root && <FieldError errors={[errors.root]} />}
-                    <FieldDescription className="text-center">
-                      Don&apos;t have an account? <a href="/signup">Sign up</a>
-                    </FieldDescription>
-                  </Field>
-                </FieldGroup>
-              </form>
-            </CardContent>
-          </Card>
+    <Suspense>
+      <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+        <div className="w-full max-w-sm">
+          <div className="flex flex-col gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Reset your password</CardTitle>
+                <CardDescription>
+                  Please set your new password below. Make sure it&apos;s strong and
+                  secure.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <FieldGroup>
+                    <Field>
+                      <FieldLabel htmlFor="password">New Password</FieldLabel>
+                      <Input
+                        id="password"
+                        type="password"
+                        placeholder="Enter your new password"
+                        {...register('password')}
+                        required
+                      />
+                      {errors.password && <FieldError errors={[errors.password]} />}
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
+                      <Input
+                        id="confirm-password"
+                        type="password"
+                        {...register('confirmPassword')}
+                        required
+                      />
+                      <FieldDescription>Please confirm your password.</FieldDescription>
+                      {errors.confirmPassword && (
+                        <FieldError errors={[errors.confirmPassword]} />
+                      )}
+                    </Field>
+                    <Field>
+                      <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? 'Resetting...' : 'Reset Password'}
+                      </Button>
+                      {errors.root && <FieldError errors={[errors.root]} />}
+                      <FieldDescription className="text-center">
+                        Don&apos;t have an account? <a href="/signup">Sign up</a>
+                      </FieldDescription>
+                    </Field>
+                  </FieldGroup>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
-    </div>
+    </Suspense>
   );
 }

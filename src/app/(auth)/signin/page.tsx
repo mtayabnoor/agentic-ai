@@ -50,19 +50,14 @@ export default function SignInPage() {
           router.push('/dashboard');
         },
         onError: (ctx) => {
-          const errorMessage = ctx.error.message || 'Signin failed';
-          const requiresVerification = /email_not_verified|verify/i.test(errorMessage);
-
-          if (requiresVerification) {
+          if (ctx.error.status === 403) {
             toast.error('Please verify your email before signing in.');
-            router.push(`/verify-email?email=${encodeURIComponent(values.email)}`);
-            return;
           }
 
           setError('root', {
-            message: errorMessage || 'Invalid email or password',
+            message: ctx.error.message,
           });
-          toast.error(errorMessage || 'Signin failed');
+          toast.error(ctx.error.message);
         },
       },
     );
