@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`font-sans ${dmSans.variable}`}>
-      <body className="h-screen overflow-hidden flex flex-col antialiased">
+      <body className="h-[100dvh] overflow-hidden flex flex-col antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
