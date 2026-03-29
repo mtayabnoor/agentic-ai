@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <AppSidebar />
       <SidebarInset>
         <SiteHeader />
-        <main className="flex-1">
+        <main className="flex-1 pt-[var(--header-height)]">
           <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
             {children}
           </div>
