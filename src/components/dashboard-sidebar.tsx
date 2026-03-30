@@ -97,7 +97,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
-        <span className="text-lg font-semibold">Agentic</span>
+        <span className="text-lg font-semibold">{process.env.NEXT_PUBLIC_APP_NAME || 'Next.js App'}</span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
