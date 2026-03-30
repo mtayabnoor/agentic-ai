@@ -5,7 +5,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { DM_Sans } from 'next/font/google';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
-const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans' });
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`font-sans ${dmSans.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${dmSans.variable}`}>
       <body className="antialiased">
         <ThemeProvider
           attribute="class"
