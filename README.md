@@ -108,7 +108,7 @@ Deploy to Vercel or any Node-compatible platform.
 
 For production:
 
-- Set all required environment variables
+- Set all required environment variables accordingly
 - Use a production PostgreSQL database
 - Set `BETTER_AUTH_URL` to your deployed URL
 - Verify your Resend sender/domain for outgoing emails
