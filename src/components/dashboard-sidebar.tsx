@@ -88,7 +88,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push('/signin');
+          router.replace('/signin');
+          router.refresh();
         },
       },
     });
