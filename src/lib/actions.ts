@@ -4,10 +4,14 @@ import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 
 async function getSession() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  return session;
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    return session;
+  } catch (error) {
+    return null;
+  }
 }
 
 export async function resendVerificationEmail(email: string) {
