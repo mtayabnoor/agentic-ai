@@ -128,7 +128,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <DropdownMenu>
               <DropdownMenuTrigger className="flex w-full items-center gap-2 rounded-[calc(var(--radius-sm)+2px)] p-2 text-left outline-hidden transition hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring data-[popup-open]:bg-sidebar-accent data-[popup-open]:text-sidebar-accent-foreground">
                 <Avatar className="h-8 w-8 rounded-lg grayscale">
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {user?.name?.charAt(0)}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user?.name}</span>
@@ -196,14 +198,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <DropdownMenuItem>
                     <IconUserCircle />
                     Account
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <IconCreditCard />
-                    Billing
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <IconNotification />
-                    Notifications
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

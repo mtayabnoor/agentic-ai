@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { SiteHeader } from '@/components/dashboard-header';
 
-
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
