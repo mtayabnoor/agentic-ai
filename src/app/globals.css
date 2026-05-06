@@ -178,7 +178,7 @@
 
   /* Paragraphs and general text */
   p {
-    @apply leading-7 [&:not(:first-child)]:mt-6;
+    @apply leading-7 [&:not(:first-child)]:mt-2;
   }
 
   /* Small text elements */

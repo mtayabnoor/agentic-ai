@@ -4,6 +4,7 @@ import { prisma } from './db';
 import {
   sendVerificationEmailWithResend,
   sendForgotPasswordEmailWithResend,
+  sendChangeEmailConfirmationEmail,
 } from './email';
 
 export const auth = betterAuth({
@@ -32,13 +33,25 @@ export const auth = betterAuth({
     sendOnSignIn: true,
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url, token }) => {
-      const verifyUrl = new URL(url);
-      verifyUrl.searchParams.set('callbackURL', '/verify-email?mode=success');
       void sendVerificationEmailWithResend({
         email: user.email,
         name: user.name,
-        verifyUrl: verifyUrl.toString(),
+        verifyUrl: url,
       });
+    },
+  },
+  user: {
+    changeEmail: {
+      enabled: true,
+      updateEmailWithoutVerification: true,
+      /* sendChangeEmailConfirmation: async ({ user, newEmail, url, token }, request) => {
+        void sendChangeEmailConfirmationEmail({
+          email: user.email, // Sent to the CURRENT email
+          name: user.name,
+          newEmail,
+          url,
+        });
+      },*/
     },
   },
   session: {
