@@ -65,7 +65,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (!user) {
-      router.push('/signin?callbackUrl=/account');
+      router.push('/signin?callbackUrl=/settings');
     }
   }, [user, router]);
 
@@ -106,7 +106,7 @@ export default function AccountPage() {
     const { error } = await authClient.changeEmail(
       {
         newEmail: newEmail,
-        callbackURL: '/account',
+        callbackURL: '/settings',
       },
       {
         onSuccess: async () => {
@@ -163,7 +163,7 @@ export default function AccountPage() {
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-3 py-3">
       <div className="space-y-2">
         <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-          Account settings
+          Account
         </h1>
         <p className="text-sm text-muted-foreground sm:text-base">
           Update your personal details and keep your sign-in credentials secure.

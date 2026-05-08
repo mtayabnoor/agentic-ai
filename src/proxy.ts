@@ -16,7 +16,7 @@ export default async function proxy(request: NextRequest) {
   const isLoggedIn = !!session?.user;
 
   const isDashboardRoute = request.nextUrl.pathname.startsWith('/dashboard');
-  const isAccountRoute = request.nextUrl.pathname.startsWith('/account');
+  const isAccountRoute = request.nextUrl.pathname.startsWith('/settings');
   const isProtectedRoute = isDashboardRoute || isAccountRoute;
   const isAuthRoute = ['/signin', '/signup', '/verify-email'].some((path) =>
     request.nextUrl.pathname.startsWith(path),

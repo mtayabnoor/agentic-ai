@@ -7,7 +7,7 @@ import { SiteHeader } from '@/components/dashboard-header';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
+    <SidebarProvider className="h-svh">
       <AppSidebar />
       <SidebarInset className="flex flex-col h-full overflow-hidden">
         <SiteHeader />

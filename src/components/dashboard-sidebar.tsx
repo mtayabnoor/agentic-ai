@@ -197,14 +197,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <DropdownMenuGroup>
                   <DropdownMenuItem
                     onClick={() => {
-                      router.push('/account');
+                      router.push('/settings');
                       if (isMobile) {
                         setOpenMobile(false);
                       }
                     }}
                   >
                     <IconUserCircle />
-                    Account
+                    Settings
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
