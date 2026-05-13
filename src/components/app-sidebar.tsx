@@ -126,20 +126,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex w-full items-center gap-2 rounded-[calc(var(--radius-sm)+2px)] p-2 text-left outline-hidden transition hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring data-[popup-open]:bg-sidebar-accent data-[popup-open]:text-sidebar-accent-foreground">
-                <Avatar className="h-8 w-8 rounded-lg grayscale">
-                  <AvatarFallback className="rounded-lg">
-                    {user?.name?.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
+              <div className="flex w-full items-center gap-2 p-2">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-black">
+                  {user?.name?.charAt(0)?.toUpperCase()}
+                </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user?.name}</span>
                   <span className="truncate text-xs text-muted-foreground">
                     {user?.email}
                   </span>
                 </div>
-                <IconDotsVertical className="ml-auto size-4" />
-              </DropdownMenuTrigger>
+
+                <DropdownMenuTrigger
+                  className="ml-auto rounded-md p-1 transition hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+                  aria-label="User menu"
+                >
+                  <IconDotsVertical className="size-4 cursor-pointer" />
+                </DropdownMenuTrigger>
+              </div>
               <DropdownMenuContent
                 className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                 side={isMobile ? 'bottom' : 'right'}
