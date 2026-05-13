@@ -31,6 +31,7 @@ import { useState } from 'react';
 
 export default function SignUpPage() {
   const router = useRouter();
+  const [locked, setLocked] = useState(false);
 
   const {
     register,
@@ -58,6 +59,7 @@ export default function SignUpPage() {
         },
         {
           onSuccess: () => {
+            setLocked(true);
             toast.success('If this email can be used, we sent next steps to your inbox.');
             router.push(`/verify-email?email=${encodeURIComponent(values.email)}`);
           },
@@ -142,7 +144,7 @@ export default function SignUpPage() {
                 </Field>
 
                 <Field>
-                  <Button type="submit" disabled={isSubmitting}>
+                  <Button type="submit" disabled={isSubmitting || locked}>
                     {isSubmitting ? 'Creating Account...' : 'Create Account'}
                   </Button>
                   {errors.root && <FieldError errors={[errors.root]} />}

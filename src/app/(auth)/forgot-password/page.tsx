@@ -21,8 +21,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { authClient } from '@/lib/auth-client';
 import { ResetPassword } from '@/lib/types';
 import { toast } from 'sonner';
+import { useState } from 'react';
 
 export default function ForgetPasswordPage() {
+  const [locked, setLocked] = useState(false);
+  
   const {
     register,
     handleSubmit,
@@ -42,6 +45,7 @@ export default function ForgetPasswordPage() {
       },
       {
         onSuccess: () => {
+          setLocked(true);
           toast.success('Password reset email sent. Please check your inbox.');
         },
       },
@@ -74,7 +78,7 @@ export default function ForgetPasswordPage() {
                     {errors.email && <FieldError errors={[errors.email]} />}
                   </Field>
                   <Field>
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button type="submit" disabled={isSubmitting || locked}>
                       {isSubmitting ? 'Sending...' : 'Send Reset Link'}
                     </Button>
                     {errors.root && <FieldError errors={[errors.root]} />}

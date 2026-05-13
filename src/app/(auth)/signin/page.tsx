@@ -42,6 +42,7 @@ export default function SignInPage() {
   const [otpStep, setOTPStep] = useState<OTPStep>('email');
   const [pendingEmail, setPendingEmail] = useState('');
   const [isSendingOTP, setIsSendingOTP] = useState(false);
+  const [locked, setLocked] = useState(false);
 
   // ─── Password form ───────────────────────────────────────────────────────────
 
@@ -60,6 +61,7 @@ export default function SignInPage() {
       { email: values.email, password: values.password },
       {
         onSuccess: () => {
+          setLocked(true);
           toast.success('Logged in successfully');
           router.push('/dashboard');
         },
@@ -138,6 +140,7 @@ export default function SignInPage() {
       return;
     }
 
+    setLocked(true);
     toast.success('Logged in successfully');
     router.push('/dashboard');
   };
@@ -241,7 +244,7 @@ export default function SignInPage() {
                       )}
                     </Field>
                     <Field>
-                      <Button type="submit" disabled={isPasswordSubmitting}>
+                      <Button type="submit" disabled={isPasswordSubmitting || locked}>
                         {isPasswordSubmitting ? 'Logging in...' : 'Login'}
                       </Button>
                       {passwordErrors.root && (
@@ -358,7 +361,7 @@ export default function SignInPage() {
                       </FieldDescription>
                     </Field>
                     <Field>
-                      <Button type="submit" disabled={isOTPVerifying}>
+                      <Button type="submit" disabled={isOTPVerifying || locked}>
                         {isOTPVerifying ? 'Verifying...' : 'Verify'}
                       </Button>
                       {otpVerifyErrors.root && (

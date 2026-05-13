@@ -22,12 +22,14 @@ import { authClient } from '@/lib/auth-client';
 import { NewPassword } from '@/lib/types';
 import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 
 function ResetPasswordContent() {
   const params = useSearchParams();
   const token = params.get('token') || '';
   const router = useRouter();
+  const [locked, setLocked] = useState(false);
+  
   const {
     register,
     handleSubmit,
@@ -48,6 +50,7 @@ function ResetPasswordContent() {
       },
       {
         onSuccess: () => {
+          setLocked(true);
           toast.success('Password has been reset successfully.');
           router.push(`/signin`);
         },
@@ -96,7 +99,7 @@ function ResetPasswordContent() {
                       )}
                     </Field>
                     <Field>
-                      <Button type="submit" disabled={isSubmitting}>
+                      <Button type="submit" disabled={isSubmitting || locked}>
                         {isSubmitting ? 'Resetting...' : 'Reset Password'}
                       </Button>
                       {errors.root && <FieldError errors={[errors.root]} />}
