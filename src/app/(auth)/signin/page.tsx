@@ -26,6 +26,7 @@ export default function SignInPage() {
   const [pendingEmail, setPendingEmail] = useState('');
   const [isSendingOTP, setIsSendingOTP] = useState(false);
   const [locked, setLocked] = useState(false);
+  const [resendError, setResendError] = useState<string | null>(null);
 
   // ─── Password form ───────────────────────────────────────────────────────────
 
@@ -68,7 +69,7 @@ export default function SignInPage() {
     defaultValues: { email: '' },
   });
 
-  const sendOTP = async (email: string) => {
+  const sendOTP = async (email: string): Promise<string | null> => {
     setIsSendingOTP(true);
     const { error } = await authClient.emailOtp.sendVerificationOtp({
       email,
@@ -77,17 +78,18 @@ export default function SignInPage() {
     setIsSendingOTP(false);
 
     if (error) {
-      toast.error(error.message ?? 'Failed to send code. Please try again.');
-      return false;
+      const msg = error.message ?? 'Failed to send code. Please try again.';
+      toast.error(msg);
+      return msg;
     }
 
     toast.success('A 6-digit code was sent to your email.');
-    return true;
+    return null;
   };
 
   const onOTPEmailSubmit = async (values: OTPEmail) => {
-    const sent = await sendOTP(values.email);
-    if (sent) {
+    const error = await sendOTP(values.email);
+    if (!error) {
       setPendingEmail(values.email);
       setOTPStep('verify');
     }
@@ -129,9 +131,12 @@ export default function SignInPage() {
   };
 
   const handleResendOTP = async () => {
-    const sent = await sendOTP(pendingEmail);
-    if (sent) {
+    setResendError(null);
+    const error = await sendOTP(pendingEmail);
+    if (!error) {
       resetOTPVerify();
+    } else {
+      setResendError(error);
     }
   };
 
@@ -281,6 +286,7 @@ export default function SignInPage() {
                           {isSendingOTP ? 'Sending...' : 'Resend Code'}
                         </Button>
                       </div>
+                      {resendError && <FieldError errors={[{ message: resendError }]} />}
                       <div className="flex justify-center">
                         <InputOTP
                           id="otp-verification"
