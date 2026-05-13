@@ -47,11 +47,7 @@ export const otpVerifySchema = z.object({
 // ─── Account ────────────────────────────────────
 
 export const accountProfileSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, 'Name is required')
-    .max(80, 'Name must be 80 characters or less'),
+  name: z.string().trim().min(1, 'Name is required').max(80, 'Name must be 80 characters or less'),
 });
 
 export const accountEmailSchema = z.object({

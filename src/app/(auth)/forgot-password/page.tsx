@@ -1,20 +1,8 @@
 'use client';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldDescription,
-} from '@/components/ui/field';
+import { Field, FieldError, FieldGroup, FieldLabel, FieldDescription } from '@/components/ui/field';
 import { resetPasswordSchema } from '@/lib/validators';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,7 +13,7 @@ import { useState } from 'react';
 
 export default function ForgetPasswordPage() {
   const [locked, setLocked] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
@@ -59,9 +47,7 @@ export default function ForgetPasswordPage() {
           <Card>
             <CardHeader>
               <CardTitle>Reset your password</CardTitle>
-              <CardDescription>
-                Enter your email below to receive a password reset link
-              </CardDescription>
+              <CardDescription>Enter your email below to receive a password reset link</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit(onSubmit)}>

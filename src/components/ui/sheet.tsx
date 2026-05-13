@@ -62,9 +62,7 @@ function SheetContent({
         {showCloseButton && (
           <SheetPrimitive.Close
             data-slot="sheet-close"
-            render={
-              <Button variant="ghost" className="absolute top-4 right-4" size="icon-sm" />
-            }
+            render={<Button variant="ghost" className="absolute top-4 right-4" size="icon-sm" />}
           >
             <RiCloseLine />
             <span className="sr-only">Close</span>
@@ -76,22 +74,12 @@ function SheetContent({
 }
 
 function SheetHeader({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      data-slot="sheet-header"
-      className={cn('flex flex-col gap-1.5 p-6', className)}
-      {...props}
-    />
-  );
+  return <div data-slot="sheet-header" className={cn('flex flex-col gap-1.5 p-6', className)} {...props} />;
 }
 
 function SheetFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div
-      data-slot="sheet-footer"
-      className={cn('mt-auto flex flex-col gap-2 p-6', className)}
-      {...props}
-    />
+    <div data-slot="sheet-footer" className={cn('mt-auto flex flex-col gap-2 p-6', className)} {...props} />
   );
 }
 

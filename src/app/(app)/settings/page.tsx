@@ -1,39 +1,18 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  IconLock,
-  IconMail,
-  IconRosetteDiscountCheck,
-  IconUser,
-} from '@tabler/icons-react';
+import { IconLock, IconMail, IconRosetteDiscountCheck, IconUser } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from '@/components/ui/field';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 import { AccountEmail, AccountPassword, AccountProfile } from '@/lib/types';
-import {
-  accountEmailSchema,
-  accountPasswordSchema,
-  accountProfileSchema,
-} from '@/lib/validators';
+import { accountEmailSchema, accountPasswordSchema, accountProfileSchema } from '@/lib/validators';
 
 export default function AccountPage() {
   const router = useRouter();
@@ -162,9 +141,7 @@ export default function AccountPage() {
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-3 py-3">
       <div className="space-y-2">
-        <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-          Account
-        </h1>
+        <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">Account</h1>
         <p className="text-sm text-muted-foreground sm:text-base">
           Update your personal details and keep your sign-in credentials secure.
         </p>
@@ -178,9 +155,7 @@ export default function AccountPage() {
                 <IconUser className="size-4" />
                 Profile
               </CardTitle>
-              <CardDescription>
-                Keep your public account information up to date.
-              </CardDescription>
+              <CardDescription>Keep your public account information up to date.</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={profileForm.handleSubmit(onUpdateProfile)}>
@@ -247,9 +222,7 @@ export default function AccountPage() {
                 <IconLock className="size-4" />
                 Password
               </CardTitle>
-              <CardDescription>
-                Choose a strong password to keep your account protected.
-              </CardDescription>
+              <CardDescription>Choose a strong password to keep your account protected.</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={passwordForm.handleSubmit(onChangePassword)}>
@@ -262,37 +235,27 @@ export default function AccountPage() {
                       {...passwordForm.register('currentPassword')}
                     />
                     {passwordForm.formState.errors.currentPassword && (
-                      <FieldError
-                        errors={[passwordForm.formState.errors.currentPassword]}
-                      />
+                      <FieldError errors={[passwordForm.formState.errors.currentPassword]} />
                     )}
                   </Field>
 
                   <Field>
                     <FieldLabel htmlFor="newPassword">New password</FieldLabel>
-                    <Input
-                      id="newPassword"
-                      type="password"
-                      {...passwordForm.register('newPassword')}
-                    />
+                    <Input id="newPassword" type="password" {...passwordForm.register('newPassword')} />
                     {passwordForm.formState.errors.newPassword && (
                       <FieldError errors={[passwordForm.formState.errors.newPassword]} />
                     )}
                   </Field>
 
                   <Field>
-                    <FieldLabel htmlFor="confirmPassword">
-                      Confirm new password
-                    </FieldLabel>
+                    <FieldLabel htmlFor="confirmPassword">Confirm new password</FieldLabel>
                     <Input
                       id="confirmPassword"
                       type="password"
                       {...passwordForm.register('confirmPassword')}
                     />
                     {passwordForm.formState.errors.confirmPassword && (
-                      <FieldError
-                        errors={[passwordForm.formState.errors.confirmPassword]}
-                      />
+                      <FieldError errors={[passwordForm.formState.errors.confirmPassword]} />
                     )}
                   </Field>
 
@@ -302,9 +265,7 @@ export default function AccountPage() {
 
                   <div className="flex justify-end">
                     <Button type="submit" disabled={passwordForm.formState.isSubmitting}>
-                      {passwordForm.formState.isSubmitting
-                        ? 'Updating...'
-                        : 'Change password'}
+                      {passwordForm.formState.isSubmitting ? 'Updating...' : 'Change password'}
                     </Button>
                   </div>
                 </FieldGroup>
@@ -320,9 +281,7 @@ export default function AccountPage() {
                 <IconRosetteDiscountCheck className="size-4" />
                 Account overview
               </CardTitle>
-              <CardDescription>
-                Your current account details and verification status.
-              </CardDescription>
+              <CardDescription>Your current account details and verification status.</CardDescription>
             </CardHeader>
             <CardContent>
               <dl className="space-y-4 text-sm">

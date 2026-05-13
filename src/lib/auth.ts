@@ -29,9 +29,7 @@ export const auth = betterAuth({
     requireEmailVerification: true,
     autoSignIn: false,
     onExistingUserSignUp: async () => {
-      throw new Error(
-        'An account with this email already exists. Please sign in instead.',
-      );
+      throw new Error('An account with this email already exists. Please sign in instead.');
     },
     sendResetPassword: async ({ user, url, token }, request) => {
       void sendForgotPasswordEmailWithResend({

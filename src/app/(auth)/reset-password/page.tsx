@@ -1,20 +1,8 @@
 'use client';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldDescription,
-} from '@/components/ui/field';
+import { Field, FieldError, FieldGroup, FieldLabel, FieldDescription } from '@/components/ui/field';
 import { newPasswordSchema } from '@/lib/validators';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,7 +17,7 @@ function ResetPasswordContent() {
   const token = params.get('token') || '';
   const router = useRouter();
   const [locked, setLocked] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
@@ -67,8 +55,7 @@ function ResetPasswordContent() {
               <CardHeader>
                 <CardTitle>Reset your password</CardTitle>
                 <CardDescription>
-                  Please set your new password below. Make sure it&apos;s strong and
-                  secure.
+                  Please set your new password below. Make sure it&apos;s strong and secure.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -94,9 +81,7 @@ function ResetPasswordContent() {
                         required
                       />
                       <FieldDescription>Please confirm your password.</FieldDescription>
-                      {errors.confirmPassword && (
-                        <FieldError errors={[errors.confirmPassword]} />
-                      )}
+                      {errors.confirmPassword && <FieldError errors={[errors.confirmPassword]} />}
                     </Field>
                     <Field>
                       <Button type="submit" disabled={isSubmitting || locked}>

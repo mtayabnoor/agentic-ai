@@ -98,9 +98,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
-        <span className="text-lg font-semibold">
-          {process.env.NEXT_PUBLIC_APP_NAME || 'Next.js App'}
-        </span>
+        <span className="text-lg font-semibold">{process.env.NEXT_PUBLIC_APP_NAME || 'Next.js App'}</span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -109,10 +107,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenu>
               {data.navMain.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    tooltip={item.title}
-                    onClick={() => isMobile && setOpenMobile(false)}
-                  >
+                  <SidebarMenuButton tooltip={item.title} onClick={() => isMobile && setOpenMobile(false)}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                   </SidebarMenuButton>
@@ -132,9 +127,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user?.name}</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    {user?.email}
-                  </span>
+                  <span className="truncate text-xs text-muted-foreground">{user?.email}</span>
                 </div>
 
                 <DropdownMenuTrigger
@@ -154,15 +147,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <DropdownMenuLabel className="p-0 font-normal">
                     <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                       <Avatar className="h-8 w-8 rounded-lg">
-                        <AvatarFallback className="rounded-lg">
-                          {user?.name?.charAt(0)}
-                        </AvatarFallback>
+                        <AvatarFallback className="rounded-lg">{user?.name?.charAt(0)}</AvatarFallback>
                       </Avatar>
                       <div className="grid flex-1 text-left text-sm leading-tight">
                         <span className="truncate font-medium">{user?.name}</span>
-                        <span className="truncate text-xs text-muted-foreground">
-                          {user?.email}
-                        </span>
+                        <span className="truncate text-xs text-muted-foreground">{user?.email}</span>
                       </div>
                     </div>
                   </DropdownMenuLabel>

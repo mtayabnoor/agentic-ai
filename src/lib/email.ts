@@ -76,11 +76,7 @@ function buildForgotPasswordEmailHtml(name: string, resetUrl: string) {
   `;
 }
 
-function buildChangeEmailConfirmationEmailHtml(
-  name: string,
-  newEmail: string,
-  url: string,
-) {
+function buildChangeEmailConfirmationEmailHtml(name: string, newEmail: string, url: string) {
   return `
     <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.5;">
       <h2 style="margin: 0 0 12px;">Approve email change</h2>
@@ -166,9 +162,7 @@ export function sendForgotPasswordEmailWithResend(input: SendForgotPasswordEmail
   });
 }
 
-export function sendChangeEmailConfirmationEmail(
-  input: SendChangeEmailConfirmationEmailInput,
-) {
+export function sendChangeEmailConfirmationEmail(input: SendChangeEmailConfirmationEmailInput) {
   if (!resend || !fromEmail) {
     throw new Error('Missing RESEND_API_KEY or RESEND_FROM_EMAIL environment variable.');
   }

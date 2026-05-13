@@ -6,14 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { resendVerificationEmail } from '@/lib/actions/email-verification';
 import { authClient } from '@/lib/auth-client';
 
@@ -81,15 +74,13 @@ function VerifyEmailContent() {
         <Card className="w-full sm:max-w-md">
           <CardHeader>
             <CardTitle>Verify Email</CardTitle>
-            <CardDescription>
-              Use the email link you received to verify your account.
-            </CardDescription>
+            <CardDescription>Use the email link you received to verify your account.</CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-4">
             <div className="rounded-md border bg-muted/40 p-3 text-sm text-muted-foreground">
-              Already verified before? Try signing in directly. If you forgot your
-              password, reset it from sign in.
+              Already verified before? Try signing in directly. If you forgot your password, reset it from
+              sign in.
             </div>
 
             <div className="space-y-2">

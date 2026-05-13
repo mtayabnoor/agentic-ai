@@ -4,28 +4,11 @@ import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useState } from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldDescription,
-} from '@/components/ui/field';
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-  InputOTPSeparator,
-} from '@/components/ui/input-otp';
+import { Field, FieldError, FieldGroup, FieldLabel, FieldDescription } from '@/components/ui/field';
+import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from '@/components/ui/input-otp';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { RiRefreshLine } from '@remixicon/react';
 import { useForm, useController } from 'react-hook-form';
@@ -218,9 +201,7 @@ export default function SignInPage() {
                         {...registerPassword('email')}
                         required
                       />
-                      {passwordErrors.email && (
-                        <FieldError errors={[passwordErrors.email]} />
-                      )}
+                      {passwordErrors.email && <FieldError errors={[passwordErrors.email]} />}
                     </Field>
                     <Field>
                       <div className="flex items-center">
@@ -239,17 +220,13 @@ export default function SignInPage() {
                         {...registerPassword('password')}
                         required
                       />
-                      {passwordErrors.password && (
-                        <FieldError errors={[passwordErrors.password]} />
-                      )}
+                      {passwordErrors.password && <FieldError errors={[passwordErrors.password]} />}
                     </Field>
                     <Field>
                       <Button type="submit" disabled={isPasswordSubmitting || locked}>
                         {isPasswordSubmitting ? 'Logging in...' : 'Login'}
                       </Button>
-                      {passwordErrors.root && (
-                        <FieldError errors={[passwordErrors.root]} />
-                      )}
+                      {passwordErrors.root && <FieldError errors={[passwordErrors.root]} />}
                       <FieldDescription className="text-center">
                         Don&apos;t have an account? <a href="/signup">Sign up</a>
                       </FieldDescription>
@@ -272,9 +249,7 @@ export default function SignInPage() {
                         {...registerOTPEmail('email')}
                         required
                       />
-                      {otpEmailErrors.email && (
-                        <FieldError errors={[otpEmailErrors.email]} />
-                      )}
+                      {otpEmailErrors.email && <FieldError errors={[otpEmailErrors.email]} />}
                     </Field>
                     <Field>
                       <Button type="submit" disabled={isSendingOTP}>
@@ -294,9 +269,7 @@ export default function SignInPage() {
                   <FieldGroup>
                     <Field>
                       <div className="flex items-center justify-between">
-                        <FieldLabel htmlFor="otp-verification">
-                          Verification code
-                        </FieldLabel>
+                        <FieldLabel htmlFor="otp-verification">Verification code</FieldLabel>
                         <Button
                           type="button"
                           variant="outline"
@@ -320,36 +293,16 @@ export default function SignInPage() {
                           required
                         >
                           <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl">
-                            <InputOTPSlot
-                              index={0}
-                              aria-invalid={!!otpVerifyErrors.otp}
-                            />
-                            <InputOTPSlot
-                              index={1}
-                              aria-invalid={!!otpVerifyErrors.otp}
-                            />
-                            <InputOTPSlot
-                              index={2}
-                              aria-invalid={!!otpVerifyErrors.otp}
-                            />
-                            <InputOTPSlot
-                              index={3}
-                              aria-invalid={!!otpVerifyErrors.otp}
-                            />
-                            <InputOTPSlot
-                              index={4}
-                              aria-invalid={!!otpVerifyErrors.otp}
-                            />
-                            <InputOTPSlot
-                              index={5}
-                              aria-invalid={!!otpVerifyErrors.otp}
-                            />
+                            <InputOTPSlot index={0} aria-invalid={!!otpVerifyErrors.otp} />
+                            <InputOTPSlot index={1} aria-invalid={!!otpVerifyErrors.otp} />
+                            <InputOTPSlot index={2} aria-invalid={!!otpVerifyErrors.otp} />
+                            <InputOTPSlot index={3} aria-invalid={!!otpVerifyErrors.otp} />
+                            <InputOTPSlot index={4} aria-invalid={!!otpVerifyErrors.otp} />
+                            <InputOTPSlot index={5} aria-invalid={!!otpVerifyErrors.otp} />
                           </InputOTPGroup>
                         </InputOTP>
                       </div>
-                      {otpVerifyErrors.otp && (
-                        <FieldError errors={[otpVerifyErrors.otp]} />
-                      )}
+                      {otpVerifyErrors.otp && <FieldError errors={[otpVerifyErrors.otp]} />}
                       <FieldDescription>
                         <button
                           type="button"
@@ -364,9 +317,7 @@ export default function SignInPage() {
                       <Button type="submit" disabled={isOTPVerifying || locked}>
                         {isOTPVerifying ? 'Verifying...' : 'Verify'}
                       </Button>
-                      {otpVerifyErrors.root && (
-                        <FieldError errors={[otpVerifyErrors.root]} />
-                      )}
+                      {otpVerifyErrors.root && <FieldError errors={[otpVerifyErrors.root]} />}
                       <div className="text-sm text-muted-foreground text-center">
                         Having trouble signing in?{' '}
                         <a
