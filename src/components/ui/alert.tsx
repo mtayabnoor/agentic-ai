@@ -25,7 +25,12 @@ function Alert({
   ...props
 }: React.ComponentProps<'div'> & VariantProps<typeof alertVariants>) {
   return (
-    <div data-slot="alert" role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
+    <div
+      data-slot="alert"
+      role="alert"
+      className={cn(alertVariants({ variant }), className)}
+      {...props}
+    />
   );
 }
 
@@ -56,7 +61,13 @@ function AlertDescription({ className, ...props }: React.ComponentProps<'div'>) 
 }
 
 function AlertAction({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div data-slot="alert-action" className={cn('absolute top-1.5 right-2', className)} {...props} />;
+  return (
+    <div
+      data-slot="alert-action"
+      className={cn('absolute top-1.5 right-2', className)}
+      {...props}
+    />
+  );
 }
 
 export { Alert, AlertTitle, AlertDescription, AlertAction };

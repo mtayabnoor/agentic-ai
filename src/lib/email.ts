@@ -19,6 +19,12 @@ type SendChangeEmailConfirmationEmailInput = {
   url: string;
 };
 
+type SendOTPEmailInput = {
+  email: string;
+  otp: string;
+  type: 'sign-in' | 'email-verification' | 'forget-password' | 'change-email';
+};
+
 const resendApiKey = process.env.RESEND_API_KEY;
 const fromEmail = process.env.RESEND_FROM_EMAIL;
 
@@ -97,6 +103,39 @@ function buildChangeEmailConfirmationEmailHtml(
   `;
 }
 
+function buildOTPEmailHtml(otp: string, type: SendOTPEmailInput['type']) {
+  const titles: Record<SendOTPEmailInput['type'], string> = {
+    'sign-in': 'Your sign-in code',
+    'email-verification': 'Your email verification code',
+    'forget-password': 'Your password reset code',
+    'change-email': 'Your email change code',
+  };
+  const descriptions: Record<SendOTPEmailInput['type'], string> = {
+    'sign-in': 'Use the code below to sign in to your account.',
+    'email-verification': 'Use the code below to verify your email address.',
+    'forget-password': 'Use the code below to reset your password.',
+    'change-email': 'Use the code below to confirm your email change.',
+  };
+  const title = titles[type];
+  const description = descriptions[type];
+
+  return `
+    <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.5;">
+      <h2 style="margin: 0 0 12px;">${title}</h2>
+      <p style="margin: 0 0 12px;">${description}</p>
+      <p style="margin: 0 0 12px;">
+        Your one-time code is:
+      </p>
+      <p style="margin: 20px 0; font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #111827;">
+        ${otp}
+      </p>
+      <p style="margin: 0 0 8px; font-size: 12px; color: #6b7280;">
+        This code expires in 5 minutes. Do not share it with anyone.
+      </p>
+    </div>
+  `;
+}
+
 export async function sendVerificationEmailWithResend(input: SendVerificationEmailInput) {
   if (!resend || !fromEmail) {
     throw new Error('Missing RESEND_API_KEY or RESEND_FROM_EMAIL environment variable.');
@@ -141,5 +180,25 @@ export function sendChangeEmailConfirmationEmail(
     to: input.email,
     subject: 'Approve email change',
     html: buildChangeEmailConfirmationEmailHtml(name, input.newEmail, input.url),
+  });
+}
+
+export function sendOTPEmailWithResend(input: SendOTPEmailInput) {
+  if (!resend || !fromEmail) {
+    throw new Error('Missing RESEND_API_KEY or RESEND_FROM_EMAIL environment variable.');
+  }
+
+  const subjects: Record<SendOTPEmailInput['type'], string> = {
+    'sign-in': 'Your sign-in code',
+    'email-verification': 'Your email verification code',
+    'forget-password': 'Your password reset code',
+    'change-email': 'Your email change code',
+  };
+
+  return resend.emails.send({
+    from: fromEmail,
+    to: input.email,
+    subject: subjects[input.type],
+    html: buildOTPEmailHtml(input.otp, input.type),
   });
 }

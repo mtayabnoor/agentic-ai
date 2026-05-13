@@ -111,7 +111,7 @@ export default function AccountPage() {
       {
         onSuccess: async () => {
           router.refresh();
-          router.push("/signin");
+          router.push('/signin');
         },
       },
     );

@@ -54,7 +54,7 @@ export default function SignUpPage() {
           email: values.email,
           password: values.password,
           name: values.name,
-          callbackURL: "/dashboard",
+          callbackURL: '/dashboard',
         },
         {
           onSuccess: () => {

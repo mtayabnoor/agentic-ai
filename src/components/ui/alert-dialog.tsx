@@ -18,7 +18,10 @@ function AlertDialogPortal({ ...props }: AlertDialogPrimitive.Portal.Props) {
   return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />;
 }
 
-function AlertDialogOverlay({ className, ...props }: AlertDialogPrimitive.Backdrop.Props) {
+function AlertDialogOverlay({
+  className,
+  ...props
+}: AlertDialogPrimitive.Backdrop.Props) {
   return (
     <AlertDialogPrimitive.Backdrop
       data-slot="alert-dialog-overlay"
@@ -93,7 +96,10 @@ function AlertDialogMedia({ className, ...props }: React.ComponentProps<'div'>) 
   );
 }
 
-function AlertDialogTitle({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
+function AlertDialogTitle({
+  className,
+  ...props
+}: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
   return (
     <AlertDialogPrimitive.Title
       data-slot="alert-dialog-title"
@@ -131,7 +137,8 @@ function AlertDialogCancel({
   variant = 'outline',
   size = 'default',
   ...props
-}: AlertDialogPrimitive.Close.Props & Pick<React.ComponentProps<typeof Button>, 'variant' | 'size'>) {
+}: AlertDialogPrimitive.Close.Props &
+  Pick<React.ComponentProps<typeof Button>, 'variant' | 'size'>) {
   return (
     <AlertDialogPrimitive.Close
       data-slot="alert-dialog-cancel"

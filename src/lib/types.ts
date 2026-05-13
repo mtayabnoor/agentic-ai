@@ -2,6 +2,8 @@ import { z } from 'zod';
 import {
   signinSchema,
   signupSchema,
+  otpEmailSchema,
+  otpVerifySchema,
   resetPasswordSchema,
   newPasswordSchema,
   accountProfileSchema,
@@ -10,6 +12,10 @@ import {
 } from './validators';
 
 export type Signin = z.infer<typeof signinSchema>;
+
+export type OTPEmail = z.infer<typeof otpEmailSchema>;
+
+export type OTPVerify = z.infer<typeof otpVerifySchema>;
 
 export type Signup = z.infer<typeof signupSchema>;
 

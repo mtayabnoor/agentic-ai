@@ -10,7 +10,11 @@ const Select = SelectPrimitive.Root;
 
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   return (
-    <SelectPrimitive.Group data-slot="select-group" className={cn('scroll-my-1 p-1', className)} {...props} />
+    <SelectPrimitive.Group
+      data-slot="select-group"
+      className={cn('scroll-my-1 p-1', className)}
+      {...props}
+    />
   );
 }
 
@@ -44,7 +48,9 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon
-        render={<RiArrowDownSLine className="pointer-events-none size-3.5 text-muted-foreground" />}
+        render={
+          <RiArrowDownSLine className="pointer-events-none size-3.5 text-muted-foreground" />
+        }
       />
     </SelectPrimitive.Trigger>
   );
@@ -116,7 +122,9 @@ function SelectItem({ className, children, ...props }: SelectPrimitive.Item.Prop
         {children}
       </SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator
-        render={<span className="pointer-events-none absolute right-2 flex items-center justify-center" />}
+        render={
+          <span className="pointer-events-none absolute right-2 flex items-center justify-center" />
+        }
       >
         <RiCheckLine className="pointer-events-none" />
       </SelectPrimitive.ItemIndicator>

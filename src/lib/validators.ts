@@ -33,6 +33,17 @@ export const newPasswordSchema = z
     path: ['confirmPassword'],
   });
 
+export const otpEmailSchema = z.object({
+  email: z.email('Invalid email address'),
+});
+
+export const otpVerifySchema = z.object({
+  otp: z
+    .string()
+    .length(6, 'Code must be exactly 6 digits')
+    .regex(/^\d{6}$/, 'Code must be 6 digits'),
+});
+
 // ─── Account ────────────────────────────────────
 
 export const accountProfileSchema = z.object({
