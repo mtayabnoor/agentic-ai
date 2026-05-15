@@ -207,7 +207,7 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-3 py-3">
+    <div className="mx-auto flex w-full max-w-5xl flex-1 min-h-0 flex-col gap-3 py-3 overflow-y-auto">
       <div className="space-y-2">
         <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">Account</h1>
         <p className="text-sm text-muted-foreground sm:text-base">
@@ -509,7 +509,7 @@ export default function AccountPage() {
           </Card>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 pl-3 pr-3 xl:border-l">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
