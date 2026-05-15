@@ -7,11 +7,11 @@ import { AppHeader } from '@/components/app-header';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider className="h-svh">
+    <SidebarProvider className="h-svh flex overflow-hidden">
       <AppSidebar />
-      <SidebarInset className="flex flex-col h-full overflow-hidden">
+      <SidebarInset className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <AppHeader />
-        <main className="flex-1 overflow-y-auto w-full max-w-7xl mx-auto px-5 md:px-10">{children}</main>
+        <main className="flex min-h-0 flex-1 overflow-hidden px-10">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
