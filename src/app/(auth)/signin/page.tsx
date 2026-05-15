@@ -188,7 +188,7 @@ export default function SignInPage() {
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  Email OTP
+                  OTP
                 </button>
               </div>
 

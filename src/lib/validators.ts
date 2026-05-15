@@ -33,6 +33,11 @@ export const newPasswordSchema = z
     path: ['confirmPassword'],
   });
 
+export const resendVerificationEmailSchema = z.object({
+  email: z.email('Invalid email address'),
+});
+
+
 export const otpEmailSchema = z.object({
   email: z.email('Invalid email address'),
 });

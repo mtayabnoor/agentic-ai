@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { emailOTP } from 'better-auth/plugins';
+import { after } from 'next/server';
 import { prisma } from './db';
 import {
   sendVerificationEmailWithResend,
@@ -20,7 +21,11 @@ export const auth = betterAuth({
       allowedAttempts: 5,
       storeOTP: 'hashed',
       async sendVerificationOTP({ email, otp, type }) {
-        void sendOTPEmailWithResend({ email, otp, type });
+        after(
+          sendOTPEmailWithResend({ email, otp, type }).catch((error) => {
+            console.error('[auth] Failed to send OTP email to', email, error);
+          }),
+        );
       },
     }),
   ],
@@ -31,24 +36,32 @@ export const auth = betterAuth({
     onExistingUserSignUp: async () => {
       throw new Error('An account with this email already exists. Please sign in instead.');
     },
-    sendResetPassword: async ({ user, url, token }, request) => {
-      void sendForgotPasswordEmailWithResend({
-        email: user.email,
-        name: user.name,
-        resetUrl: url,
-      });
+    sendResetPassword: async ({ user, url }) => {
+      after(
+        sendForgotPasswordEmailWithResend({
+          email: user.email,
+          name: user.name,
+          resetUrl: url,
+        }).catch((error) => {
+          console.error('[auth] Failed to send password reset email to', user.email, error);
+        }),
+      );
     },
   },
   emailVerification: {
     sendOnSignUp: true,
     sendOnSignIn: true,
     autoSignInAfterVerification: true,
-    sendVerificationEmail: async ({ user, url, token }) => {
-      void sendVerificationEmailWithResend({
-        email: user.email,
-        name: user.name,
-        verifyUrl: url,
-      });
+    sendVerificationEmail: async ({ user, url }) => {
+      after(
+        sendVerificationEmailWithResend({
+          email: user.email,
+          name: user.name,
+          verifyUrl: url,
+        }).catch((error) => {
+          console.error('[auth] Failed to send verification email to', user.email, error);
+        }),
+      );
     },
   },
   user: {

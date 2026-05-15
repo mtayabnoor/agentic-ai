@@ -1,30 +1,49 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { resendVerificationEmail } from '@/lib/actions/email-verification';
 import { authClient } from '@/lib/auth-client';
+import type { ResendVerificationEmailFormValues } from '@/lib/types';
+import { resendVerificationEmailSchema } from '@/lib/validators';
 
 function VerifyEmailContent() {
   const params = useSearchParams();
   const router = useRouter();
   const emailFromQuery = params.get('email') || '';
 
-  const [email, setEmail] = useState(emailFromQuery);
-  const [resending, setResending] = useState(false);
   const [cooldown, setCooldown] = useState(0);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting },
+  } = useForm<ResendVerificationEmailFormValues>({
+    resolver: zodResolver(resendVerificationEmailSchema),
+    defaultValues: {
+      email: emailFromQuery,
+    },
+  });
 
   const { data: session } = authClient.useSession();
   const emailVerified = session?.user?.emailVerified;
 
   useEffect(() => {
-    setEmail(emailFromQuery);
-  }, [emailFromQuery]);
+    clearErrors();
+    reset({ email: emailFromQuery });
+  }, [clearErrors, emailFromQuery, reset]);
 
   useEffect(() => {
     if (cooldown <= 0) {
@@ -38,25 +57,19 @@ function VerifyEmailContent() {
     return () => clearInterval(timer);
   }, [cooldown]);
 
-  const onResend = async () => {
-    if (!email) {
-      toast.error('Please enter your email first.');
-      return;
-    }
+  const onResend = async (values: ResendVerificationEmailFormValues) => {
+    const response = await resendVerificationEmail(values.email);
 
-    setResending(true);
-
-    const response = await resendVerificationEmail(email);
-
-    setResending(false);
-
-    setCooldown(60);
-    console.log(response);
     if (!response.success) {
+      setError('root', { message: response.message });
       toast.error(response.message);
       return;
     }
+
+    setCooldown(60);
+    toast.success('Verification email sent');
   };
+
   return (
     <div className="flex w-full items-center justify-center p-6 md:p-10">
       {emailVerified && (
@@ -65,8 +78,8 @@ function VerifyEmailContent() {
             <CardTitle>Email Verified</CardTitle>
             <CardDescription>Your email has been verified successfully.</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <Button onClick={() => router.push('/dashboard')}>Go to Dashboard</Button>
+          <CardContent className="flex flex-col gap-4">
+            <Button onClick={() => router.push('/tools/dashboard')}>Go to Tools Dashboard</Button>
           </CardContent>
         </Card>
       )}
@@ -77,32 +90,39 @@ function VerifyEmailContent() {
             <CardDescription>Use the email link you received to verify your account.</CardDescription>
           </CardHeader>
 
-          <CardContent className="space-y-4">
-            <div className="rounded-md border bg-muted/40 p-3 text-sm text-muted-foreground">
-              Already verified before? Try signing in directly. If you forgot your password, reset it from
-              sign in.
-            </div>
+          <CardContent className="flex flex-col gap-4">
+            <Alert>
+              <AlertDescription>
+                Already verified before? Try signing in directly. If you forgot your password, reset it from
+                sign in.
+              </AlertDescription>
+            </Alert>
 
-            <div className="space-y-2">
-              <Input
-                type="email"
-                placeholder="name@example.com"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-              <Button
-                type="button"
-                className="w-full"
-                onClick={onResend}
-                disabled={resending || cooldown > 0}
-              >
-                {resending
-                  ? 'Sending...'
-                  : cooldown > 0
-                    ? `Resend available in ${cooldown}s`
-                    : 'Resend verification email'}
-              </Button>
-            </div>
+            <form onSubmit={handleSubmit(onResend)}>
+              <FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="verify-email-address">Email</FieldLabel>
+                  <Input
+                    id="verify-email-address"
+                    type="email"
+                    placeholder="name@example.com"
+                    aria-invalid={errors.email ? true : undefined}
+                    {...register('email')}
+                  />
+                  {errors.email && <FieldError errors={[errors.email]} />}
+                </Field>
+                {errors.root && <FieldError errors={[errors.root]} />}
+                <Field>
+                  <Button type="submit" className="w-full" disabled={isSubmitting || cooldown > 0}>
+                    {isSubmitting
+                      ? 'Sending...'
+                      : cooldown > 0
+                        ? `Resend available in ${cooldown}s`
+                        : 'Resend verification email'}
+                  </Button>
+                </Field>
+              </FieldGroup>
+            </form>
           </CardContent>
 
           <CardFooter className="flex justify-between text-sm">

@@ -36,6 +36,9 @@ export default function ForgetPasswordPage() {
           setLocked(true);
           toast.success('Password reset email sent. Please check your inbox.');
         },
+        onError: (ctx) => {
+          toast.error(ctx.error.message ?? 'Failed to send reset email. Please try again.');
+        },
       },
     );
   };

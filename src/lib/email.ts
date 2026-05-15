@@ -132,14 +132,14 @@ function buildOTPEmailHtml(otp: string, type: SendOTPEmailInput['type']) {
   `;
 }
 
-export async function sendVerificationEmailWithResend(input: SendVerificationEmailInput) {
+export function sendVerificationEmailWithResend(input: SendVerificationEmailInput) {
   if (!resend || !fromEmail) {
     throw new Error('Missing RESEND_API_KEY or RESEND_FROM_EMAIL environment variable.');
   }
 
   const name = input.name?.trim() || 'there';
 
-  await resend.emails.send({
+  return resend.emails.send({
     from: fromEmail,
     to: input.email,
     subject: 'Verify your email',
