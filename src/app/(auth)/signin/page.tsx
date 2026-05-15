@@ -42,16 +42,23 @@ export default function SignInPage() {
 
   const onPasswordSubmit = async (values: Signin) => {
     await authClient.signIn.email(
-      { email: values.email, password: values.password },
       {
-        onSuccess: () => {
+        email: values.email,
+        password: values.password,
+      },
+      {
+        onSuccess(context) {
+          if ('twoFactorRedirect' in context.data) {
+            router.push('/two-factor');
+            return;
+          }
           setLocked(true);
           toast.success('Logged in successfully');
           router.push('/dashboard');
         },
-        onError: (ctx) => {
-          setPasswordError('root', { message: ctx.error.message });
-          toast.error(ctx.error.message);
+        onError(context) {
+          setPasswordError('root', { message: context.error.message });
+          toast.error(context.error.message);
         },
       },
     );

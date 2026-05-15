@@ -10,6 +10,9 @@ import {
   accountEmailSchema,
   accountPasswordSchema,
   resendVerificationEmailSchema,
+  twoFactorCodeSchema,
+  twoFactorPasswordSchema,
+  twoFactorBackupCodeSchema,
 } from './validators';
 
 export type Signin = z.infer<typeof signinSchema>;
@@ -31,3 +34,9 @@ export type AccountProfile = z.infer<typeof accountProfileSchema>;
 export type AccountEmail = z.infer<typeof accountEmailSchema>;
 
 export type AccountPassword = z.infer<typeof accountPasswordSchema>;
+
+export type TwoFactorCode = z.infer<typeof twoFactorCodeSchema>;
+
+export type TwoFactorPassword = z.infer<typeof twoFactorPasswordSchema>;
+
+export type TwoFactorBackupCode = z.infer<typeof twoFactorBackupCodeSchema>;

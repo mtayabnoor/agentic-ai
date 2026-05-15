@@ -37,7 +37,6 @@ export const resendVerificationEmailSchema = z.object({
   email: z.email('Invalid email address'),
 });
 
-
 export const otpEmailSchema = z.object({
   email: z.email('Invalid email address'),
 });
@@ -69,3 +68,20 @@ export const accountPasswordSchema = z
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   });
+
+// ─── 2FA ────────────────────────────────────────
+
+export const twoFactorCodeSchema = z.object({
+  code: z
+    .string()
+    .length(6, 'Code must be exactly 6 digits')
+    .regex(/^\d{6}$/, 'Code must be 6 digits'),
+});
+
+export const twoFactorPasswordSchema = z.object({
+  password: z.string(),
+});
+
+export const twoFactorBackupCodeSchema = z.object({
+  code: z.string().min(1, 'Backup code is required'),
+});

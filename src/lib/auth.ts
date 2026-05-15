@@ -1,6 +1,6 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { emailOTP } from 'better-auth/plugins';
+import { emailOTP, twoFactor } from 'better-auth/plugins';
 import { after } from 'next/server';
 import { prisma } from './db';
 import {
@@ -27,6 +27,10 @@ export const auth = betterAuth({
           }),
         );
       },
+    }),
+    twoFactor({
+      issuer: process.env.NEXT_PUBLIC_APP_NAME || 'My App',
+      allowPasswordless: true,
     }),
   ],
   emailAndPassword: {
